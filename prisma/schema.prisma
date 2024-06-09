@@ -1,0 +1,60 @@
+// schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// User model
+model User {
+  uid                               String     @id  @map("uid")
+  first_name                        String
+  last_name                         String
+  email                             String    @unique
+  address1                          String?
+  address2                          String?
+  number                            String
+  cnic                              String?    @unique
+  photo                             String?
+  father_name                       String?
+  finger_print_photo                String?
+  is_authorized                     Boolean?  @default(false)
+  voted_for_presidential_candidates Boolean?  @default(false)
+  voted_for_vice_presidential_candidates Boolean? @default(false)
+}
+
+// PresidentialCandidate model
+// model PresidentialCandidate {
+//   id                 Int        @id @default(auto()) @map("_id") 
+//   first_name        String
+//   last_name         String
+//   description_short String
+//   photo             String
+//   party             Party  @relation(fields: [party_id], references: [id])
+//   party_id          String
+// }
+
+// // VicePresidentialCandidate model
+// model VicePresidentialCandidate {
+//   id                String @id @default(auto()) @map("_id") 
+//   first_name        String
+//   last_name         String
+//   description_short String
+//   photo             String
+//   party             Party  @relation(fields: [party_id], references: [id])
+//   party_id          String
+// }
+
+// // Party model
+// model Party {
+//   id                         Int @id @default(auto()) @map("_id") 
+//   name                       String
+//   photo                      String
+//   symbol                     String
+//   vice_presidential_candidates VicePresidentialCandidate[]
+//   presidential_candidates     PresidentialCandidate[]
+// }
