@@ -14,8 +14,10 @@ const AuthController = {
             });
         }
     },
+
     signup: async (req, res) => {
         try {
+            console.log({X:req.body});
             const signupUser = await AuthService.signupUser(req.body);
             return res.status(signupUser.status).json(signupUser);
         } catch (error) {
