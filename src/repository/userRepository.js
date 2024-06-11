@@ -48,15 +48,7 @@ const userRepository = {
             const getUser = await prisma.user.findUnique({
                 where: {
                     id: userId
-                },
-                select: {
-                    id: true,
-                    uid:true,
-                    first_name: true,
-                    last_name: true,
-                    email: true,
-                    number: true,
-                },
+                }
             });
          
           if (!getUser) {
