@@ -29,9 +29,9 @@ const AuthService = {
 
             return {
                 status: 200,
+                token: token,
                 user: getUser.data,
                 message: 'Login successful',
-                token: token
             };
         } catch (error) {
             console.error(error.message);
