@@ -11,20 +11,14 @@ generator client {
 
 // User model
 model User {
-  uid                               String     @id  @map("uid")
-  first_name                        String
-  last_name                         String
-  email                             String    @unique
-  address1                          String?
-  address2                          String?
-  number                            String
-  cnic                              String?    @unique
-  photo                             String?
-  father_name                       String?
-  finger_print_photo                String?
-  is_authorized                     Boolean?  @default(false)
-  voted_for_presidential_candidates Boolean?  @default(false)
-  voted_for_vice_presidential_candidates Boolean? @default(false)
+  id        String   @id @default(uuid())
+  first_name String
+  last_name  String
+  number     String
+  email      String   @unique
+  password   String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 // PresidentialCandidate model

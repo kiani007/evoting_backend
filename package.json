@@ -36,6 +36,7 @@
     "mongodb": "^6.6.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
+    "uuid": "^10.0.0",
     "winston": "^3.13.0"
   }
 }

@@ -3,7 +3,6 @@ import AuthService from "../services/AuthService.js";
 const AuthController = {
     login: async (req, res) => {
         try {
-            console.log(req.body);
             const loginUser = await AuthService.loginUser(req.body);
             return res.status(loginUser.status).json(loginUser);
         } catch (error) {
