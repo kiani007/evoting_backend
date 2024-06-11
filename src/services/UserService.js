@@ -3,7 +3,6 @@ import userRepository from '../repository/userRepository.js';
 const UserService = {
     getUser: async (userId) => {
         const getUser = await userRepository.getMeUser(userId);
-        console.log(getUser)
         if (!getUser) {
             return {
                 status: 500,

@@ -2,7 +2,6 @@ import UserService from "../services/UserService.js";
 
 const UserController = {
     getUser: async (req, res) => {
-        console.log({X:req.user.data.id});
         const userId = req.user.data.id;
         const Me = await UserService.getUser(userId);
         if (Me) {

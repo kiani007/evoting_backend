@@ -19,7 +19,7 @@ const authenticateJWT = (req, res, next) => {
         }
 
         req.user = decoded; 
-        console.log(decoded ,"JWT Middleware")
+        // console.log(decoded ,"JWT Middleware")
         next();
     });
 };
