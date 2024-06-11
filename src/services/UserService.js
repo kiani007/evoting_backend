@@ -1,8 +1,8 @@
 import userRepository from '../repository/userRepository.js';
 
 const UserService = {
-    getUser: async () => {
-        const getUser = await userRepository.getUser();
+    getUser: async (userId) => {
+        const getUser = await userRepository.getMeUser(userId);
         console.log(getUser)
         if (!getUser) {
             return {
@@ -10,11 +10,7 @@ const UserService = {
                 message: 'Failed to get users'
             };
         }
-        return {
-            status: 200,
-            message: 'Users fetched successfully',
-            data: getUser
-        };
+        return  getUser
     },
     updateUser: async (body) => {
         const updateUser = await userRepository.updateUser(body);

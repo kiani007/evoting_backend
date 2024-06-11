@@ -43,20 +43,38 @@ const userRepository = {
         }
     },
 
-    getUser: async () => {
-        const getUser = await prisma.user.findMany();
-        if (!getUser) {
+    getMeUser: async (userId) => {
+        try {
+            const getUser = await prisma.user.findUnique({
+                where: {
+                    id: userId
+                },
+                select: {
+                    id: true,
+                    uid:true,
+                    first_name: true,
+                    last_name: true,
+                    email: true,
+                    number: true,
+                },
+            });
+         
+          if (!getUser) {
             return {
-                status: 500,
-                message: 'Failed to get users'
+              status: 500,
+              message: "Failed to get user",
             };
+          }
+          return getUser;
+        } catch (error) {
+          console.error("Error fetching user:", error.message);
+          return {
+            status: 500,
+            message: "An error occurred while fetching the user",
+            error: error.message,
+          };
         }
-        return {
-            status: 200,
-            message: 'Users fetched successfully',
-            data: getUser
-        };
-    },
+      },
 
     updateUser: async (user) => {
         try {

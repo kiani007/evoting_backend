@@ -2,16 +2,16 @@ import UserService from "../services/UserService.js";
 
 const UserController = {
     getUser: async (req, res) => {
-        const { data: user } = req.user;
-        console.log(user)
-
-        if (user && user.uid) {
+        console.log({X:req.user.data.id});
+        const userId = req.user.data.id;
+        const Me = await UserService.getUser(userId);
+        if (Me) {
             return res.status(200).json({
-                status: 200,
-                message: 'User fetched successfully',
-                data: user
+              status: 200,
+              message: "User fetched successfully",
+              data: Me,
             });
-        }
+          }
         return res.status(500).json({
             status: 500,
             message: 'Failed to get user'
