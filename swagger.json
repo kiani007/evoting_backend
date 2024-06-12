@@ -126,7 +126,7 @@
         }
       }
     },
-    "/update": {
+    "/user/update": {
       "post": {
         "summary": "Update authenticated user",
         "tags": ["User"],
@@ -153,6 +153,27 @@
                   },
                   "number": {
                     "type": "string"
+                  },
+                  "address1": {
+                    "type": "string"
+                  },
+                  "address2": {
+                    "type": "string"
+                  },
+                  "cnic": {
+                    "type": "string"
+                  },
+                  "father_name": {
+                    "type": "string"
+                  },
+                  "is_authorized": {
+                    "type": "boolean"
+                  },
+                  "voted_for_presidential_candidates": {
+                    "type": "boolean"
+                  },
+                  "voted_for_vice_presidential_candidates": {
+                    "type": "boolean"
                   }
                 }
               }
@@ -187,9 +208,9 @@
         }
       }
     },
-    "/delete/{uid}": {
+    "/user/delete/{id}": {
       "delete": {
-        "summary": "Delete user by UID",
+        "summary": "Delete user by Id",
         "tags": ["User"],
         "security": [
           {
@@ -231,9 +252,9 @@
         }
       }
     },
-    "/get-user/{uid}": {
+    "/user/get-user/{id}": {
       "get": {
-        "summary": "Get user by UID",
+        "summary": "Get user by Id",
         "tags": ["User"],
         "security": [
           {
@@ -242,7 +263,7 @@
         ],
         "parameters": [
           {
-            "name": "uid",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {

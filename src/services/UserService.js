@@ -11,8 +11,9 @@ const UserService = {
         }
         return  getUser
     },
-    updateUser: async (body) => {
-        const updateUser = await userRepository.updateUser(body);
+    updateUser: async (body,imageUrl,userId) => {
+
+        const updateUser = await userRepository.updateUser(body,imageUrl,userId);
         if (updateUser.status !== 200) {
             return {
                 status: 500,
@@ -25,8 +26,8 @@ const UserService = {
             data: updateUser.data
         };
     },
-    deleteUser: async (uid) => {
-        const deleteUser = await userRepository.deleteUser(uid);
+    deleteUser: async (id) => {
+        const deleteUser = await userRepository.deleteUser(id);
         if (deleteUser.status !== 200) {
             return {
                 status: 500,
@@ -39,9 +40,8 @@ const UserService = {
             data: deleteUser.data
         };
     },
-    getUserById: async (uid) => {
-        const getUser = await userRepository.getUserById(uid);
-        console.log(getUser)
+    getUserById: async (id) => {
+        const getUser = await userRepository.getUserById(id);
         if (getUser.status === 200) {
             return getUser;
         }

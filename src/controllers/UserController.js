@@ -1,4 +1,9 @@
 import UserService from "../services/UserService.js";
+import multer from 'multer';
+
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const UserController = {
     getUser: async (req, res) => {
@@ -17,9 +22,17 @@ const UserController = {
         });
     },
     updateUser: async (req, res) => {
-        const { data : user } = req.user;
-        if (user && user.uid) {
-            const updatedUser = await UserService.updateUser(req.body);
+        const userId = req.user.data.id;
+        const file = req.file;
+        let imageUrl;
+console.log({file});
+        if (file) {
+            const filePath = `/uploads/${file.originalname}`;
+            require('fs').writeFileSync(`./public${filePath}`, file.buffer);
+            imageUrl = filePath;
+          }
+        if (userId) {
+            const updatedUser = await UserService.updateUser(req.body,imageUrl,userId);
             return res.status(updatedUser.status).json(updatedUser);
         }
         return res.status(500).json({
@@ -28,13 +41,14 @@ const UserController = {
         });
     },
     deleteUser: async (req, res) => {
-        const { uid } = req.params;
-        const deletedUser = await UserService.deleteUser(uid);
+        const id = req.params.uid;
+        const deletedUser = await UserService.deleteUser(id);
         return res.status(deletedUser.status).json(deletedUser);
     },
     getUserById: async (req, res) => {
-        const { uid } = req.params;
-        const user = await UserService.getUserById(uid);
+        const id = req.params.uid;
+        console.log({id});
+        const user = await UserService.getUserById(id);
         return res.status(user.status).json(user);
     }
 };
