@@ -74,7 +74,14 @@
                     "type": "string"
                   }
                 },
-                "required": ["first_name", "last_name", "email", "password", "number", "uid"]
+                "required": [
+                  "first_name",
+                  "last_name",
+                  "email",
+                  "password",
+                  "number",
+                  "uid"
+                ]
               }
             }
           }
@@ -295,6 +302,127 @@
           },
           "500": {
             "description": "Failed to get user"
+          }
+        }
+      }
+    },
+    "/candidate/add-candidate": {
+      "post": {
+        "summary": "Add a new candidate",
+        "tags": ["Candidate"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "party_name": {
+                    "type": "string"
+                  },
+
+                  "position": {
+                    "type": "string"
+                  }
+                },
+                "required": ["name", "party_name", "vote_counter", "position"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Candidate added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/candidate/all-candidate": {
+      "get": {
+        "summary": "Get All candidates ",
+        "tags": ["Candidate"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "position",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter candidates by position e.g (president,vice, only)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Candidates fetch successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+    "/candidate/get-candidate-by-id": {
+      "get": {
+        "summary": "Get candidate by Id",
+        "tags": ["Candidate"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Get candidate by Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Candidate fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to get candidate"
           }
         }
       }

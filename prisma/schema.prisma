@@ -28,6 +28,17 @@ model User {
   voted_for_vice_presidential_candidates Boolean? @default(false)
 }
 
+
+model Candidtes {
+  id           String   @id @default(uuid())
+  name         String
+  party_name   String
+  vote_counter Decimal
+  position     String
+  image        String?
+  createdAt    DateTime  @default(now())
+}
+
 // PresidentialCandidate model
 // model PresidentialCandidate {
 //   id                 Int        @id @default(auto()) @map("_id") 

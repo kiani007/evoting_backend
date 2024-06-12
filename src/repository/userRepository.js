@@ -121,6 +121,30 @@ const userRepository = {
       };
     }
   },
+
+  getUserByEmailandUid: async (uid,email) => {
+    try {
+      const getUser = await prisma.user.findFirst({ where: { uid:uid,email:email } });
+      if (!getUser) {
+        return {
+          status: 400,
+          message: "User Not Found",
+          data: null,
+        };
+      }
+      return {
+        status: 200,
+        message: "User Exists",
+        data: getUser,
+      };
+    } catch (error) {
+      return {
+        status: 500,
+        message: "Failed to get user",
+        error: error.message,
+      };
+    }
+  },
 };
 
 export default userRepository;

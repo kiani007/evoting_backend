@@ -4,6 +4,7 @@ import userRepository from "../repository/userRepository.js";
 const AuthService = {
     loginUser: async (query) => {
         try {
+            
             const user = {
                 email: query.email,
                 uid: query.uid
@@ -16,7 +17,7 @@ const AuthService = {
                 };
             }
 
-            const getUser = await userRepository.getUserById(user.uid, user.email);
+            const getUser = await userRepository.getUserByEmailandUid(user.uid, user.email);
             if (getUser.status !== 200) return getUser;
 
             const tokenPayload = {
@@ -59,7 +60,7 @@ const AuthService = {
                 };
             }
 
-            const getUser = await userRepository.getUserById(user.uid, user.email);
+            const getUser = await userRepository.getUserByEmailandUid(user.uid, user.email);
             if (getUser.status === 200) return { status: 409, message: "User already exists" };
 
             const createUser = await userRepository.createUser(user);
