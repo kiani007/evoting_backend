@@ -25,18 +25,33 @@ const CandidateController = {
       });
     }
   },
-  getCandidateById: async (req, res)=>{
+  getCandidateById: async (req, res) => {
     try {
-        const { id } = req.query;
-        const candidate = await CandidateService.findCandidate(id);
-        return res.status(candidate.status).json(candidate);
-      } catch (error) {
-        console.error(error.message);
-        return res.status(400).json({
-          status: 400,
-          message: "An error occurred during creating",
-        });
-      }
-  }
+      const { id } = req.query;
+      const candidate = await CandidateService.findCandidate(id);
+      return res.status(candidate.status).json(candidate);
+    } catch (error) {
+      console.error(error.message);
+      return res.status(400).json({
+        status: 400,
+        message: "An error occurred during creating",
+      });
+    }
+  },
+  addVoteToCandidte: async (req, res) => {
+    try {
+      const { id } = req.query;
+      console.log({id});
+      const candidate = await CandidateService.voteCandidate(id);
+
+      return res.status(candidate.status).json(candidate);
+    } catch (error) {
+      console.error(error.message);
+      return res.status(400).json({
+        status: 400,
+        message: "An error occurred during creating",
+      });
+    }
+  },
 };
 export default CandidateController;

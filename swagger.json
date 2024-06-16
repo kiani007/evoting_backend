@@ -426,6 +426,36 @@
           }
         }
       }
+    },
+    "/candidate/vote-to-candidate": {
+      "get": {
+        "summary": "Vote to a candidate",
+        "tags": ["Candidate"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the candidate to vote for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Candidate Voted successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
     }
   },
   "components": {

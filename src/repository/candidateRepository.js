@@ -46,12 +46,8 @@ const candidateRepository = {
           message: "Candidate not found",
         };
       }
-
-      return {
-        status: 200,
-        message: "Candidate fetched successfully",
-        data: candidate,
-      };
+      console.log({candidate});
+      return candidate;
     } catch (error) {
       console.error(error.message);
       return {
@@ -60,5 +56,37 @@ const candidateRepository = {
       };
     }
   },
+
+  voteCandidate: async (id) => {
+    try {
+      const can = await prisma.candidtes.findUnique({
+        where: { id: id }
+      });
+      if (can) {
+        console.log({can});
+        const updatedCandidate = await prisma.candidtes.update({
+          where: { id: id },
+          data: {
+            vote_counter: {
+              increment: 1 // Use the increment operation to add 1 to the current value
+            }
+          }
+        });
+       return updatedCandidate;
+      } else {
+        return {
+          status: 404,
+          message: "Candidate not found"
+        };
+      }
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 400,
+        message: "An error occurred during voting"
+      };
+    }
+  },
+  
 };
 export default candidateRepository;

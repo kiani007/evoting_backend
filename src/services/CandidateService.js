@@ -62,5 +62,21 @@ const CandidateService = {
       };
     }
   },
+  voteCandidate: async (id) => {
+    try {
+      const can = await candidateRepository.voteCandidate(id)
+      return {
+        status: 200,
+        candidates: can,
+        message: "Vote is Cast",
+      };
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 400,
+        message: "An error occurred during adding candidate",
+      };
+    }
+  },
 };
 export default CandidateService;

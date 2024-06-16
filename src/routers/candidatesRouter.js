@@ -6,6 +6,7 @@ const candidateRouter = Router();
 candidateRouter.post('/add-candidate',authenticateJWT, CandidateController.addCandidate);
 candidateRouter.get('/all-candidate',authenticateJWT, CandidateController.getAllCandidate);
 candidateRouter.get('/get-candidate-by-id',authenticateJWT, CandidateController.getCandidateById);
+candidateRouter.get('/vote-to-candidate',authenticateJWT, CandidateController.addVoteToCandidte);
 
 candidateRouter.all("*", (req, res) => {
   return res.status(404).json("Not Found");
