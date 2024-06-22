@@ -53,5 +53,17 @@ const CandidateController = {
       });
     }
   },
+  uploadFile: async (req, res) => {
+    try {
+      const result = await CandidateService.uploadFile(req.file);
+      return res.status(result.status).json(result);
+    } catch (error) {
+      console.error(error.message);
+      return res.status(400).json({
+        status: 400,
+        message: "An error occurred during file upload",
+      });
+    }
+  }
 };
 export default CandidateController;

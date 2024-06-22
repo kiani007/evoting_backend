@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-
+import fs from "fs";
 const prisma = new PrismaClient();
 
 const userRepository = {
@@ -21,7 +21,7 @@ const userRepository = {
   //signup get user by uid
   getUserById: async (id) => {
     try {
-      const getUser = await prisma.user.findFirst({ where: { id:id } });
+      const getUser = await prisma.user.findFirst({ where: { id: id } });
       if (!getUser) {
         return {
           status: 400,
@@ -107,7 +107,7 @@ const userRepository = {
 
   deleteUser: async (id) => {
     try {
-      const deleteUser = await prisma.user.delete({ where: { id:id} });
+      const deleteUser = await prisma.user.delete({ where: { id: id } });
       return {
         status: 200,
         message: "User deleted successfully",
@@ -122,9 +122,11 @@ const userRepository = {
     }
   },
 
-  getUserByEmailandUid: async (uid,email) => {
+  getUserByEmailandUid: async (uid, email) => {
     try {
-      const getUser = await prisma.user.findFirst({ where: { uid:uid,email:email } });
+      const getUser = await prisma.user.findFirst({
+        where: { uid: uid, email: email },
+      });
       if (!getUser) {
         return {
           status: 400,
@@ -141,6 +143,37 @@ const userRepository = {
       return {
         status: 500,
         message: "Failed to get user",
+        error: error.message,
+      };
+    }
+  },
+  uploadImageX: async (userId, file) => {
+    try {
+      if (!file) {
+        throw new Error("File is missing");
+      }
+      console.log({ userId });
+      const filePath = `/uploads/${file.originalname}`;
+      await fs.promises.writeFile(`./public${filePath}`, file.buffer);
+      // Update the user's image path in the database
+
+      const updateUser = await prisma.user.update({
+        where: { id: userId },
+        data: {
+          photo: filePath ?? null,
+        },
+      });
+
+      return {
+        status: 201,
+        message: "Image uploaded successfully",
+        data: updateUser,
+      };
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 500,
+        message: "Failed to upload image",
         error: error.message,
       };
     }

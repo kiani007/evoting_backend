@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import candidateRepository from "../repository/candidateRepository.js";
 
 const CandidateService = {
@@ -78,5 +80,31 @@ const CandidateService = {
       };
     }
   },
+  uploadFile: async (file) => {
+    try {
+      if (!file) {
+        return {
+          status: 400,
+          message: 'File is missing..'
+        };
+      }
+
+      const filePath = `/uploads/${file.originalname}`;
+      fs.writeFileSync(`./public${filePath}`, file.buffer);
+
+      return {
+        status: 201,
+        message: 'File uploaded successfully',
+        filePath
+      };
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 500,
+        message: 'Failed to upload file',
+        error: error.message
+      };
+    }
+  }
 };
 export default CandidateService;

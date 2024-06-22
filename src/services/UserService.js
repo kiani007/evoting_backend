@@ -1,5 +1,6 @@
 import userRepository from '../repository/userRepository.js';
 
+
 const UserService = {
     getUser: async (userId) => {
         const getUser = await userRepository.getMeUser(userId);
@@ -50,7 +51,26 @@ const UserService = {
             message: 'User Already Exists',
             data: getUser.data
         };
-    }
+    },
+    uploadImage: async (userId, file) => {
+        try {
+        console.log({userId});
+            const result = await userRepository.uploadImageX(userId, file);
+        
+            return {
+              status: 201,
+              message: 'Image uploaded successfully',
+              result,
+            };
+          } catch (error) {
+            console.error(error.message);
+            return {
+              status: 500,
+              message: 'Failed to upload image',
+              error: error.message,
+            };
+          }
+      },
 };
 
 export default UserService;
