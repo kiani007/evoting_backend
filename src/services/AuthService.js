@@ -50,10 +50,11 @@ const AuthService = {
                 last_name: body.last_name,
                 number: body.number,
                 email: body.email,
+                cnic:body.cnic,
                 uid: body.uid
             };
 
-            if (!user.first_name || !user.email || !user.last_name || !user.number || !user.uid) {
+            if (!user.first_name || !user.email || !user.last_name || !user.number || !user.cnic || !user.uid) {
                 return {
                     status: 400,
                     message: 'All fields are required'
