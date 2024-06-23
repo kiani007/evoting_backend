@@ -68,7 +68,7 @@ const userRepository = {
     }
   },
 
-  updateUser: async (user, imageUrl, userId) => {
+  updateUser: async (user, userId) => {
     try {
       // Ensure unique identifier is provided and not undefined
       if (!userId) {
@@ -81,7 +81,6 @@ const userRepository = {
         where: { id: userId },
         data: {
           ...user,
-          photo: imageUrl || null,
           is_authorized: user.is_authorized ?? false,
           voted_for_presidential_candidates:
             user.voted_for_presidential_candidates ?? false,

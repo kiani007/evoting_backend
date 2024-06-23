@@ -33,7 +33,6 @@ const UserController = {
     if (userId) {
       const updatedUser = await UserService.updateUser(
         req.body,
-        imageUrl,
         userId
       );
       return res.status(updatedUser.status).json(updatedUser);

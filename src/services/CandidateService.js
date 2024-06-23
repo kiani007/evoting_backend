@@ -53,7 +53,7 @@ const CandidateService = {
       const getCandidate = await candidateRepository.findById(id);
       return {
         status: 200,
-        candidates: getCandidate.data,
+        candidate: getCandidate,
         message: "fetch successful",
       };
     } catch (error) {

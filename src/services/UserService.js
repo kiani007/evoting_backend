@@ -12,9 +12,9 @@ const UserService = {
         }
         return  getUser
     },
-    updateUser: async (body,imageUrl,userId) => {
+    updateUser: async (body,userId) => {
 
-        const updateUser = await userRepository.updateUser(body,imageUrl,userId);
+        const updateUser = await userRepository.updateUser(body,userId);
         if (updateUser.status !== 200) {
             return {
                 status: 500,
