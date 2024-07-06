@@ -13,6 +13,7 @@ userRouter.post('/update', authenticateJWT, UserController.updateUser);
 userRouter.delete('/delete/:uid', authenticateJWT, UserController.deleteUser);
 userRouter.get('/get-user/:uid', authenticateJWT, UserController.getUserById);
 userRouter.post('/upload-image', authenticateJWT, upload.single('file'), UserController.uploadFile);
+userRouter.get('/all-user',authenticateJWT, UserController.getAllUser);
 
 
 userRouter.all("*", (req, res) => {

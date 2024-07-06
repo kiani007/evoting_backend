@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-
+import fs from "fs";
 const prisma = new PrismaClient();
 const candidateRepository = {
   createCandidate: async (can) => {
@@ -87,6 +87,34 @@ const candidateRepository = {
       };
     }
   },
-  
+  uploadImageX: async (candidateId, file) => {
+    try {
+      if (!file) {
+        throw new Error("File is missing");
+      }
+      console.log({ XX:candidateId });
+      const filePath = `/uploads/${file.originalname}`;
+      await fs.promises.writeFile(`./public${filePath}`, file.buffer);
+      // Update the user's image path in the database
+
+      const updateUser = await prisma.candidtes.update({
+        where: { id: candidateId },
+        data: {
+          image: filePath ?? null,
+        },
+      });
+
+      return {
+        data: updateUser,
+      };
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 500,
+        message: "Failed to upload image",
+        error: error.message,
+      };
+    }
+  },
 };
 export default candidateRepository;

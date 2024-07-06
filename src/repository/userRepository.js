@@ -164,8 +164,6 @@ const userRepository = {
       });
 
       return {
-        status: 201,
-        message: "Image uploaded successfully",
         data: updateUser,
       };
     } catch (error) {
@@ -176,6 +174,20 @@ const userRepository = {
         error: error.message,
       };
     }
+  },
+  findAll: async () => {
+    const all = await prisma.user.findMany();
+    if (!all) {
+      return {
+        status: 500,
+        message: "Failed to find User",
+      };
+    }
+    return {
+      status: 200,
+      message: "Fetch all User successfully",
+      data: all,
+    };
   },
 };
 

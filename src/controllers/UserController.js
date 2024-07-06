@@ -31,10 +31,7 @@ const UserController = {
       imageUrl = filePath;
     }
     if (userId) {
-      const updatedUser = await UserService.updateUser(
-        req.body,
-        userId
-      );
+      const updatedUser = await UserService.updateUser(req.body, userId);
       return res.status(updatedUser.status).json(updatedUser);
     }
     return res.status(500).json({
@@ -87,14 +84,26 @@ const UserController = {
 
   uploadFile: async (req, res) => {
     try {
-        const userId = req.user.data.id;
-      const result = await UserService.uploadImage(userId,req.file);
+      const userId = req.user.data.id;
+      const result = await UserService.uploadImage(userId, req.file);
       return res.status(result.status).json(result);
     } catch (error) {
       console.error(error.message);
       return res.status(400).json({
         status: 400,
         message: "An error occurred during file upload",
+      });
+    }
+  },
+  getAllUser: async (req, res) => {
+    try {
+      const user = await UserService.allUser();
+      return res.status(user.status).json(user);
+    } catch (error) {
+      console.error(error.message);
+      return res.status(400).json({
+        status: 400,
+        message: "An error occurred during creating",
       });
     }
   },

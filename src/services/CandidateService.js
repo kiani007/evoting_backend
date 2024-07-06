@@ -80,31 +80,24 @@ const CandidateService = {
       };
     }
   },
-  uploadFile: async (file) => {
+  uploadImage: async (candidateId, file) => {
     try {
-      if (!file) {
+    console.log({candidateId});
+        const result = await candidateRepository.uploadImageX(candidateId, file);
+    
         return {
-          status: 400,
-          message: 'File is missing..'
+          status: 201,
+          message: 'Image uploaded successfully',
+          result,
+        };
+      } catch (error) {
+        console.error(error.message);
+        return {
+          status: 500,
+          message: 'Failed to upload image',
+          error: error.message,
         };
       }
-
-      const filePath = `/uploads/${file.originalname}`;
-      fs.writeFileSync(`./public${filePath}`, file.buffer);
-
-      return {
-        status: 201,
-        message: 'File uploaded successfully',
-        filePath
-      };
-    } catch (error) {
-      console.error(error.message);
-      return {
-        status: 500,
-        message: 'Failed to upload file',
-        error: error.message
-      };
-    }
   }
 };
 export default CandidateService;

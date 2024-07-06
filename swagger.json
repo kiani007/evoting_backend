@@ -341,6 +341,27 @@
         }
       }
     },
+    "/user/all-user": {
+      "get": {
+        "summary": "Get All user ",
+        "tags": ["User"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "User fetch successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
     "/candidate/add-candidate": {
       "post": {
         "summary": "Add a new candidate",
@@ -492,13 +513,24 @@
         }
       }
     },
-    "/candidate/upload": {
+   "/candidate/upload": {
       "post": {
         "summary": "Upload a file",
         "tags": ["Candidate"],
         "security": [
           {
             "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "candidateId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the candidate"
           }
         ],
         "requestBody": {
@@ -510,9 +542,11 @@
                 "properties": {
                   "file": {
                     "type": "string",
-                    "format": "binary"
+                    "format": "binary",
+                    "description": "Image file of the candidate"
                   }
-                }
+                },
+                "required": ["file"]
               }
             }
           }

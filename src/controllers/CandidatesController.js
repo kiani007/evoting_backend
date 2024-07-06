@@ -2,6 +2,7 @@ import CandidateService from "../services/CandidateService.js";
 const CandidateController = {
   addCandidate: async (req, res) => {
     try {
+      console.log({X:req.body});
       const candidate = await CandidateService.addNewCandidate(req.body);
       return res.status(candidate.status).json(candidate);
     } catch (error) {
@@ -55,7 +56,9 @@ const CandidateController = {
   },
   uploadFile: async (req, res) => {
     try {
-      const result = await CandidateService.uploadFile(req.file);
+      const candidateId = req.query;
+      console.log({X:candidateId.candidateId});
+      const result = await CandidateService.uploadImage(candidateId.candidateId, req.file);
       return res.status(result.status).json(result);
     } catch (error) {
       console.error(error.message);
