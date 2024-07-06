@@ -74,14 +74,14 @@ const UserService = {
       const getUser = await userRepository.findAll();
       return {
         status: 200,
-        candidates: getUser.data,
+        users: getUser.data,
         message: "fetch successful",
       };
     } catch (error) {
       console.error(error.message);
       return {
         status: 400,
-        message: "An error occurred during adding candidate",
+        message: "An error occurred during adding User",
       };
     }
   },
