@@ -39,13 +39,31 @@ const UserController = {
       message: "Failed to update user",
     });
   },
+  updateUserById: async (req, res) => {
+    const userId = req.params.id;
+    const file = req.file;
+    let imageUrl;
+    if (file) {
+      const filePath = `/uploads/${file.originalname}`;
+      require("fs").writeFileSync(`./public${filePath}`, file.buffer);
+      imageUrl = filePath;
+    }
+    if (userId) {
+      const updatedUser = await UserService.updateUser(req.body, userId);
+      return res.status(updatedUser.status).json(updatedUser);
+    }
+    return res.status(500).json({
+      status: 500,
+      message: "Failed to update user",
+    });
+  },
   deleteUser: async (req, res) => {
     const id = req.params.id;  
     const deletedUser = await UserService.deleteUser(id);
     return res.status(deletedUser.status).json(deletedUser);
   },
   getUserById: async (req, res) => {
-    const id = req.params.uid;
+    const id = req.params.id;
     console.log({ id });
     const user = await UserService.getUserById(id);
     return res.status(user.status).json(user);

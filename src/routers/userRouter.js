@@ -10,8 +10,9 @@ const upload = multer({ storage: storage });
 const userRouter = Router();
 userRouter.get('/get-user', authenticateJWT, UserController.getUser);
 userRouter.post('/update', authenticateJWT, UserController.updateUser);
+userRouter.post('/update/:id', authenticateJWT, UserController.updateUserById);
 userRouter.delete('/delete/:id', authenticateJWT, UserController.deleteUser);
-userRouter.get('/get-user/:uid', authenticateJWT, UserController.getUserById);
+userRouter.get('/get-user/:id', authenticateJWT, UserController.getUserById);
 userRouter.post('/upload-image', authenticateJWT, upload.single('file'), UserController.uploadFile);
 userRouter.get('/all-user',authenticateJWT, UserController.getAllUser);
 
