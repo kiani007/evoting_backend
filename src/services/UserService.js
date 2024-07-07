@@ -1,4 +1,5 @@
 import userRepository from "../repository/userRepository.js";
+import admin from 'firebase-admin';
 
 const UserService = {
   getUser: async (userId) => {
@@ -33,6 +34,7 @@ const UserService = {
         message: "Failed to delete user",
       };
     }
+    await admin.auth().deleteUser(id);
     return {
       status: 200,
       message: "User deleted successfully",

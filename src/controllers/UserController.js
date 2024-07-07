@@ -40,7 +40,7 @@ const UserController = {
     });
   },
   deleteUser: async (req, res) => {
-    const id = req.params.uid;
+    const id = req.params.id;  
     const deletedUser = await UserService.deleteUser(id);
     return res.status(deletedUser.status).json(deletedUser);
   },

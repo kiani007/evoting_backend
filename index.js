@@ -6,10 +6,14 @@ import setupSwagger from './swaggerConfig.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import multer from 'multer';
+import admin from 'firebase-admin';
+
+
 
 // Initialize express app
 const app = express();
 const port = 3000;
+const  serviceAccount = './e-voting-c0337-firebase-adminsdk-fy3ag-f08f23e7d8.json';
 
 dotenv.config();
 
@@ -17,14 +21,19 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://e-voting-c0337-default-rtdb.firebaseio.com"
+})
 // Multer configuration for memory storage
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // allow all routes for cors
 const corsOptions = {
-  origin: '*',
-  optionsSuccessStatus: 200
+  origin: 'http://localhost:4000', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(express.json());

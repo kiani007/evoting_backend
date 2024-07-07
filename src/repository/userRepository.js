@@ -106,7 +106,7 @@ const userRepository = {
 
   deleteUser: async (id) => {
     try {
-      const deleteUser = await prisma.user.delete({ where: { id: id } });
+      const deleteUser = await prisma.user.delete({ where: { uid: id } });
       return {
         status: 200,
         message: "User deleted successfully",
