@@ -385,11 +385,12 @@
                     "type": "string"
                   },
 
-                  "position": {
-                    "type": "string"
-                  }
+                 "position": {
+                  "type": "string",
+                  "enum": ["president", "vice_president"]
+                }
                 },
-                "required": ["name", "party_name", "vote_counter", "position"]
+                "required": ["name", "party_name", "position"]
               }
             }
           }
@@ -421,7 +422,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Filter candidates by position e.g (president,vice, only)"
+            "description": "Filter candidates by position e.g (president,vice_president, only)"
           }
         ],
         "responses": {

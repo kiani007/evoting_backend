@@ -46,7 +46,7 @@ const candidateRepository = {
           message: "Candidate not found",
         };
       }
-      console.log({candidate});
+      console.log({ candidate });
       return candidate;
     } catch (error) {
       console.error(error.message);
@@ -77,33 +77,47 @@ const candidateRepository = {
     }
   },
 
-  voteCandidate: async (id) => {
+  voteCandidate: async (userId, id) => {
     try {
       const can = await prisma.candidtes.findUnique({
-        where: { id: id }
+        where: { id },
       });
       if (can) {
-        console.log({can});
         const updatedCandidate = await prisma.candidtes.update({
-          where: { id: id },
+          where: { id },
           data: {
             vote_counter: {
-              increment: 1 // Use the increment operation to add 1 to the current value
-            }
-          }
+              increment: 1,
+            },
+          },
         });
-       return updatedCandidate;
+        if ((can.position == "president")) {
+          await prisma.user.update({
+            where: { id: userId },
+            data: {
+              voted_for_presidential_candidates: can.name,
+            },
+          });
+        } else {
+          await prisma.user.update({
+            where: { id: userId },
+            data: {
+              voted_for_vice_presidential_candidates: can.name,
+            },
+          });
+        }
+        return updatedCandidate;
       } else {
         return {
           status: 404,
-          message: "Candidate not found"
+          message: "Candidate not found",
         };
       }
     } catch (error) {
       console.error(error.message);
       return {
         status: 400,
-        message: "An error occurred during voting"
+        message: "An error occurred during voting",
       };
     }
   },
@@ -112,7 +126,7 @@ const candidateRepository = {
       if (!file) {
         throw new Error("File is missing");
       }
-      console.log({ XX:candidateId });
+      console.log({ XX: candidateId });
       const filePath = `/uploads/${file.originalname}`;
       await fs.promises.writeFile(`./public${filePath}`, file.buffer);
       // Update the user's image path in the database

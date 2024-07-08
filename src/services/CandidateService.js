@@ -1,8 +1,20 @@
-import fs from 'fs';
-import path from 'path';
+
 import candidateRepository from "../repository/candidateRepository.js";
+import UserService from "./UserService.js";
+
+
+const Positions = Object.freeze({
+  PRESIDENT: "president",
+  VICE_PRESIDENT: "vice_president",
+});
+ const isValidPosition = (position) => {
+    console.log({position});
+    return Object.values(Positions).includes(position);
+  };
+
 
 const CandidateService = {
+  
   addNewCandidate: async (body) => {
     try {
       const data = {
@@ -15,6 +27,14 @@ const CandidateService = {
         return {
           status: 400,
           message: "All fields are required",
+        };
+      }
+      if (!isValidPosition(data.position)) {
+        return {
+          status: 400,
+          message:
+            "Invalid position. Allowed values are: " +
+            Object.values(Positions).join(", "),
         };
       }
 
@@ -80,13 +100,28 @@ const CandidateService = {
       };
     }
   },
-  voteCandidate: async (id) => {
+  voteCandidate: async (userId, id) => {
     try {
-      const can = await candidateRepository.voteCandidate(id)
+      const user = await UserService.getUserById(userId);
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      const isPresidentialVoteEmpty = !user.data.voted_for_presidential_candidates;
+      const isVicePresidentialVoteEmpty =
+        !user.data.voted_for_vice_presidential_candidates;
+      
+        if (isPresidentialVoteEmpty || isVicePresidentialVoteEmpty ) {
+        const can = await candidateRepository.voteCandidate(userId, id);
+        return {
+          status: 200,
+          candidates: can,
+          message: "Vote is Cast",
+        };
+      }
       return {
         status: 200,
-        candidates: can,
-        message: "Vote is Cast",
+        message: "User Already Cast The Vote",
       };
     } catch (error) {
       console.error(error.message);
@@ -98,22 +133,22 @@ const CandidateService = {
   },
   uploadImage: async (candidateId, file) => {
     try {
-    console.log({candidateId});
-        const result = await candidateRepository.uploadImageX(candidateId, file);
-    
-        return {
-          status: 201,
-          message: 'Image uploaded successfully',
-          result,
-        };
-      } catch (error) {
-        console.error(error.message);
-        return {
-          status: 500,
-          message: 'Failed to upload image',
-          error: error.message,
-        };
-      }
-  }
+      console.log({ candidateId });
+      const result = await candidateRepository.uploadImageX(candidateId, file);
+
+      return {
+        status: 201,
+        message: "Image uploaded successfully",
+        result,
+      };
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 500,
+        message: "Failed to upload image",
+        error: error.message,
+      };
+    }
+  },
 };
 export default CandidateService;

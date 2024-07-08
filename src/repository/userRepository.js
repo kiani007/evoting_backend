@@ -83,9 +83,9 @@ const userRepository = {
           ...user,
           is_authorized: user.is_authorized ?? false,
           voted_for_presidential_candidates:
-            user.voted_for_presidential_candidates ?? false,
+            user.voted_for_presidential_candidates ?? "",
           voted_for_vice_presidential_candidates:
-            user.voted_for_vice_presidential_candidates ?? false,
+            user.voted_for_vice_presidential_candidates ?? "",
         },
       });
       console.log({ updateUser });
@@ -121,10 +121,10 @@ const userRepository = {
     }
   },
 
-  getUserByEmailandUid: async (uid, email) => {
+  getUserByEmailandUid: async (uid, email, cnic) => {
     try {
       const getUser = await prisma.user.findFirst({
-        where: { uid: uid, email: email },
+        where: { uid: uid, email: email, cnic: cnic },
       });
       if (!getUser) {
         return {

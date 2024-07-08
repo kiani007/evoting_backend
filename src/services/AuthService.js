@@ -61,7 +61,7 @@ const AuthService = {
                 };
             }
 
-            const getUser = await userRepository.getUserByEmailandUid(user.uid, user.email);
+            const getUser = await userRepository.getUserByEmailandUid(user.uid, user.email,user.cnic);
             if (getUser.status === 200) return { status: 409, message: "User already exists" };
 
             const createUser = await userRepository.createUser(user);
