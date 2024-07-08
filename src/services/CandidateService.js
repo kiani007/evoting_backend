@@ -48,6 +48,22 @@ const CandidateService = {
       };
     }
   },
+  updateCandidate: async (id, body) => {
+    try {
+      const getCandidate = await candidateRepository.updateCandidate(id, body);
+      return {
+        status: 200,
+        candidate: getCandidate.data,
+        message: "fetch successful",
+      };
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 400,
+        message: "An error occurred during adding candidate",
+      };
+    }
+  },
   findCandidate: async (id) => {
     try {
       const getCandidate = await candidateRepository.findById(id);

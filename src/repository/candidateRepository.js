@@ -57,6 +57,26 @@ const candidateRepository = {
     }
   },
 
+  updateCandidate: async (id, body) => {
+    try {
+      const getCandidate = await prisma.candidtes.update({
+        where: { id: id },
+        data: { ...body },
+      });
+      return {
+        status: 200,
+        candidate: getCandidate,
+        message: "fetch successful",
+      };
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 400,
+        message: "An error occurred during adding candidate",
+      };
+    }
+  },
+
   voteCandidate: async (id) => {
     try {
       const can = await prisma.candidtes.findUnique({
