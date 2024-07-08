@@ -42,7 +42,6 @@ const UserController = {
   updateUserById: async (req, res) => {
     const userId = req.params.id;
     const file = req.file;
-    let imageUrl;
     if (file) {
       const filePath = `/uploads/${file.originalname}`;
       require("fs").writeFileSync(`./public${filePath}`, file.buffer);
