@@ -124,6 +124,19 @@ const UserController = {
       });
     }
   },
+  checkEligibility: async(req,res)=>{
+    try {
+      const userId = req.user.data.id;
+      const user = await UserService.userEligibility(userId);
+      return res.status(user.status).json(user);
+    }catch (error) {
+      console.error(error.message);
+      return res.status(400).json({
+        status: 400,
+        message: "An error occurred during creating",
+      });
+    }
+  }
 };
 
 export default UserController;

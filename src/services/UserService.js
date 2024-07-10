@@ -1,5 +1,5 @@
 import userRepository from "../repository/userRepository.js";
-import admin from 'firebase-admin';
+import admin from "firebase-admin";
 
 const UserService = {
   getUser: async (userId) => {
@@ -84,6 +84,36 @@ const UserService = {
       return {
         status: 400,
         message: "An error occurred during adding User",
+      };
+    }
+  },
+  userEligibility: async (userId) => {
+    try {
+      const user = await UserService.getUserById(userId);
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      const isPresidentialVoteEmpty =
+        !user.data.voted_for_presidential_candidates;
+      const isVicePresidentialVoteEmpty =
+        !user.data.voted_for_vice_presidential_candidates;
+
+      if (isPresidentialVoteEmpty || isVicePresidentialVoteEmpty) {
+        return {
+          status: 200,
+          message: "User Eligibility",
+        };
+      }
+      return {
+        status: 200,
+        message: "User not Eligibility",
+      };
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 400,
+        message: "An error occurred during checking User",
       };
     }
   },

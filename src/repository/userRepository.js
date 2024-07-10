@@ -188,7 +188,7 @@ const userRepository = {
       message: "Fetch all User successfully",
       data: all,
     };
-  },
+  }
 };
 
 export default userRepository;
