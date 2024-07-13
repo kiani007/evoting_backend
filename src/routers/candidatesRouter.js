@@ -15,7 +15,7 @@ candidateRouter.post('/upload', authenticateJWT, upload.single('file'), Candidat
 candidateRouter.get('/vote-to-persident',authenticateJWT, CandidateController.addVoteToPresidentCandidte);
 candidateRouter.get('/vote-to-vice',authenticateJWT, CandidateController.addVoteToVicePresidentCandidte);
 candidateRouter.get('/get-matrix-result',authenticateJWT, CandidateController.matrixResult);
-
+candidateRouter.get('/get-winner-candidte',authenticateJWT, CandidateController.getWinnerCandidte);
 
 
 candidateRouter.all("*", (req, res) => {

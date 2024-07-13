@@ -118,5 +118,19 @@ const CandidateController = {
       });
     }
   },
+
+  getWinnerCandidte: async (req, res) => {
+    try {
+      const position = req.query;
+      const result = await CandidateService.getWinner(position.position)
+      return res.status(result.status).json(result);
+    } catch (error) {
+      console.error(error.message);
+      return res.status(400).json({
+        status: 400,
+        message: "An error occurred during get Result",
+      });
+    }
+  },
 };
 export default CandidateController;

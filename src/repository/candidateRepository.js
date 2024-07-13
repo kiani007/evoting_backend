@@ -177,5 +177,43 @@ const candidateRepository = {
       };
     }
   },
+
+  getTheWinnerCandidte: async (position) => {
+    try {
+      console.log({position});
+      const result = await prisma.$queryRaw`
+      SELECT 
+          c.name,
+          c.party_name,
+          c.position,
+          c.vote_counter
+      FROM 
+          "Candidtes" AS c
+      WHERE 
+          c.vote_counter = (
+              SELECT MAX(c2.vote_counter) 
+              FROM "Candidtes" AS c2 
+              WHERE c2.position = ${position}::text
+          )
+          AND c.position = ${position}::text
+      LIMIT 1;
+    `;
+       console.log({ result });
+    return {
+      status: 200,
+      candidate: result[0],
+      message: "Data retrieved successfully",
+    };
+
+   
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 500,
+        message: "Failed to get Result",
+        error: error.message,
+      };
+    }
+  },
 };
 export default candidateRepository;

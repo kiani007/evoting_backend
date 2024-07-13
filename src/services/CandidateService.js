@@ -189,9 +189,21 @@ const CandidateService = {
   getResult: async () => {
     try {
       const result = await candidateRepository.matrixResult();
-      return result
-     
-        } catch (error) {
+      return result;
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 500,
+        message: "Failed to Get Result",
+        error: error.message,
+      };
+    }
+  },
+  getWinner: async (pos) => {
+    try {
+      const result = await candidateRepository.getTheWinnerCandidte(pos);
+      return result;
+    } catch (error) {
       console.error(error.message);
       return {
         status: 500,

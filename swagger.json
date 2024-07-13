@@ -631,6 +631,36 @@
           }
         }
       }
+    },
+    "/candidate/get-winner-candidte": {
+      "get": {
+        "summary": "Get Winner candidates ",
+        "tags": ["Matrix"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "position",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter candidates by position e.g (president,vice_president, only)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Candidates fetch successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
     }
   },
   "components": {
