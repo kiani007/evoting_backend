@@ -14,6 +14,9 @@ candidateRouter.post('/update-candidate-by-id',authenticateJWT, CandidateControl
 candidateRouter.post('/upload', authenticateJWT, upload.single('file'), CandidateController.uploadFile);
 candidateRouter.get('/vote-to-persident',authenticateJWT, CandidateController.addVoteToPresidentCandidte);
 candidateRouter.get('/vote-to-vice',authenticateJWT, CandidateController.addVoteToVicePresidentCandidte);
+candidateRouter.get('/get-matrix-result',authenticateJWT, CandidateController.matrixResult);
+
+
 
 candidateRouter.all("*", (req, res) => {
   return res.status(404).json("Not Found");

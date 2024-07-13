@@ -610,6 +610,27 @@
           }
         }
       }
+    },
+    "/candidate/get-matrix-result": {
+      "get": {
+        "summary": "Get Matrix data",
+        "tags": ["Matrix"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "Receved Matrix Data successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
     }
   },
   "components": {

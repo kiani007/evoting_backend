@@ -56,7 +56,10 @@ const CandidateController = {
     try {
       const { id } = req.query;
       const userId = req.user.data.id;
-      const candidate = await CandidateService.votePresidentCandidate(userId, id);
+      const candidate = await CandidateService.votePresidentCandidate(
+        userId,
+        id
+      );
 
       return res.status(candidate.status).json(candidate);
     } catch (error) {
@@ -71,7 +74,10 @@ const CandidateController = {
     try {
       const { id } = req.query;
       const userId = req.user.data.id;
-      const candidate = await CandidateService.voteVicePresidentCandidate(userId, id);
+      const candidate = await CandidateService.voteVicePresidentCandidate(
+        userId,
+        id
+      );
 
       return res.status(candidate.status).json(candidate);
     } catch (error) {
@@ -96,6 +102,19 @@ const CandidateController = {
       return res.status(400).json({
         status: 400,
         message: "An error occurred during file upload",
+      });
+    }
+  },
+
+  matrixResult: async (req, res) => {
+    try {
+      const result = await CandidateService.getResult()
+      return res.status(result.status).json(result);
+    } catch (error) {
+      console.error(error.message);
+      return res.status(400).json({
+        status: 400,
+        message: "An error occurred during get Result",
       });
     }
   },

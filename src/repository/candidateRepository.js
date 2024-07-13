@@ -151,5 +151,31 @@ const candidateRepository = {
       };
     }
   },
+
+  matrixResult: async () => {
+    try {
+      const candidates = await prisma.candidtes.findMany({
+        select: {
+          id: true,
+          name: true,
+          party_name: true,
+          vote_counter: true,
+          position: true,
+        },
+      });
+      return {
+        status: 200,
+        candidates,
+        message: "Data retrieved successfully",
+      };
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 500,
+        message: "Failed to upload image",
+        error: error.message,
+      };
+    }
+  },
 };
 export default candidateRepository;

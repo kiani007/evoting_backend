@@ -105,15 +105,13 @@ const CandidateService = {
 
       const isPresidentialVoteEmpty =
         !user.data.voted_for_presidential_candidates;
-      // const isVicePresidentialVoteEmpty = !user.data.voted_for_vice_presidential_candidates;
-
-      console.log({
-        P: isPresidentialVoteEmpty,
-        // V: isVicePresidentialVoteEmpty,
-      });
 
       if (isPresidentialVoteEmpty) {
-        const can = await candidateRepository.voteCandidate(userId, id,'president');
+        const can = await candidateRepository.voteCandidate(
+          userId,
+          id,
+          "president"
+        );
         return {
           status: 200,
           candidates: can,
@@ -143,12 +141,12 @@ const CandidateService = {
       const isVicePresidentialVoteEmpty =
         !user.data.voted_for_vice_presidential_candidates;
 
-      console.log({
-        V: isVicePresidentialVoteEmpty,
-      });
-
       if (isVicePresidentialVoteEmpty) {
-        const can = await candidateRepository.voteCandidate(userId, id,'vice_president');
+        const can = await candidateRepository.voteCandidate(
+          userId,
+          id,
+          "vice_president"
+        );
         return {
           status: 200,
           candidates: can,
@@ -183,6 +181,21 @@ const CandidateService = {
       return {
         status: 500,
         message: "Failed to upload image",
+        error: error.message,
+      };
+    }
+  },
+
+  getResult: async () => {
+    try {
+      const result = await candidateRepository.matrixResult();
+      return result
+     
+        } catch (error) {
+      console.error(error.message);
+      return {
+        status: 500,
+        message: "Failed to Get Result",
         error: error.message,
       };
     }
