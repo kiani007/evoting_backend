@@ -1,20 +1,16 @@
-
 import candidateRepository from "../repository/candidateRepository.js";
 import UserService from "./UserService.js";
-
 
 const Positions = Object.freeze({
   PRESIDENT: "president",
   VICE_PRESIDENT: "vice_president",
 });
- const isValidPosition = (position) => {
-    console.log({position});
-    return Object.values(Positions).includes(position);
-  };
-
+const isValidPosition = (position) => {
+  console.log({ position });
+  return Object.values(Positions).includes(position);
+};
 
 const CandidateService = {
-  
   addNewCandidate: async (body) => {
     try {
       const data = {
@@ -100,29 +96,70 @@ const CandidateService = {
       };
     }
   },
-  voteCandidate: async (userId, id) => {
+  votePresidentCandidate: async (userId, id) => {
     try {
       const user = await UserService.getUserById(userId);
       if (!user) {
         throw new Error("User not found");
       }
 
-      const isPresidentialVoteEmpty = !user.data.voted_for_presidential_candidates;
-      const isVicePresidentialVoteEmpty =
-        !user.data.voted_for_vice_presidential_candidates;
-      
-        if (isPresidentialVoteEmpty || isVicePresidentialVoteEmpty ) {
-        const can = await candidateRepository.voteCandidate(userId, id);
+      const isPresidentialVoteEmpty =
+        !user.data.voted_for_presidential_candidates;
+      // const isVicePresidentialVoteEmpty = !user.data.voted_for_vice_presidential_candidates;
+
+      console.log({
+        P: isPresidentialVoteEmpty,
+        // V: isVicePresidentialVoteEmpty,
+      });
+
+      if (isPresidentialVoteEmpty) {
+        const can = await candidateRepository.voteCandidate(userId, id,'president');
         return {
           status: 200,
           candidates: can,
-          message: "Vote is Cast",
+          message: "Vote is Cast to President",
+        };
+      } else {
+        return {
+          status: 400,
+          message: "Already Voted to President",
         };
       }
+    } catch (error) {
+      console.error(error.message);
       return {
-        status: 200,
-        message: "User Already Cast The Vote",
+        status: 400,
+        message: "An error occurred during adding candidate",
       };
+    }
+  },
+  voteVicePresidentCandidate: async (userId, id) => {
+    try {
+      const user = await UserService.getUserById(userId);
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      const isVicePresidentialVoteEmpty =
+        !user.data.voted_for_vice_presidential_candidates;
+
+      console.log({
+        V: isVicePresidentialVoteEmpty,
+      });
+
+      if (isVicePresidentialVoteEmpty) {
+        const can = await candidateRepository.voteCandidate(userId, id,'vice_president');
+        return {
+          status: 200,
+          candidates: can,
+          message: "Vote is Cast to Vice President",
+        };
+      } else {
+        return {
+          status: 400,
+          message: "Already Voted to Vice President",
+        };
+      }
     } catch (error) {
       console.error(error.message);
       return {

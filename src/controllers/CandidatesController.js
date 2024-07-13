@@ -52,11 +52,26 @@ const CandidateController = {
       });
     }
   },
-  addVoteToCandidte: async (req, res) => {
+  addVoteToPresidentCandidte: async (req, res) => {
     try {
       const { id } = req.query;
       const userId = req.user.data.id;
-      const candidate = await CandidateService.voteCandidate(userId, id);
+      const candidate = await CandidateService.votePresidentCandidate(userId, id);
+
+      return res.status(candidate.status).json(candidate);
+    } catch (error) {
+      console.error(error.message);
+      return res.status(400).json({
+        status: 400,
+        message: "An error occurred during creating",
+      });
+    }
+  },
+  addVoteToVicePresidentCandidte: async (req, res) => {
+    try {
+      const { id } = req.query;
+      const userId = req.user.data.id;
+      const candidate = await CandidateService.voteVicePresidentCandidate(userId, id);
 
       return res.status(candidate.status).json(candidate);
     } catch (error) {

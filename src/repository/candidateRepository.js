@@ -77,21 +77,22 @@ const candidateRepository = {
     }
   },
 
-  voteCandidate: async (userId, id) => {
+  voteCandidate: async (userId, id, pos) => {
     try {
       const can = await prisma.candidtes.findUnique({
         where: { id },
       });
+      console.log({ pos });
       if (can) {
         const updatedCandidate = await prisma.candidtes.update({
-          where: { id },
+          where: { id: id, position: pos },
           data: {
             vote_counter: {
               increment: 1,
             },
           },
         });
-        if ((can.position == "president")) {
+        if (can.position == "president") {
           await prisma.user.update({
             where: { id: userId },
             data: {

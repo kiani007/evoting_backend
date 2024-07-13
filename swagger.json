@@ -503,9 +503,9 @@
         }
       }
     },
-    "/candidate/vote-to-candidate": {
+    "/candidate/vote-to-persident": {
       "get": {
-        "summary": "Vote to a candidate",
+        "summary": "Vote to a Persident",
         "tags": ["Candidate"],
         "security": [
           {
@@ -520,12 +520,42 @@
             "schema": {
               "type": "string"
             },
-            "description": "The ID of the candidate to vote for"
+            "description": "The ID of the Persident to vote for"
           }
         ],
         "responses": {
           "200": {
-            "description": "Candidate Voted successfully"
+            "description": "Persident Voted successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/candidate/vote-to-vice": {
+      "get": {
+        "summary": "Vote to a Vice Persident",
+        "tags": ["Candidate"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the Vice Persident to vote for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vice Persident Voted successfully"
           },
           "400": {
             "description": "Invalid input"
