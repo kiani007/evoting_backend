@@ -9,26 +9,31 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// User model
-model User {
-  id                                       String   @id @default(uuid())
-  uid                                      String   @unique
-  first_name                               String
-  last_name                                String
-  email                                    String    @unique
-  address1                                 String?
-  address2                                 String?
-  number                                   String
-  cnic                                     String?    @unique
-  photo                                    String?
-  father_name                              String?
-  finger_print_photo                       String?
-  is_authorized                            Boolean?  @default(false)
-  voted_for_presidential_candidates        String? 
-  voted_for_vice_presidential_candidates   String?
-
+enum Role {
+  USER
+  ADMIN
 }
 
+// User model
+model User {
+  id                                     String   @id @default(uuid())
+  uid                                    String   @unique
+  first_name                             String
+  last_name                              String
+  email                                  String   @unique
+  address1                               String?
+  address2                               String?
+  number                                 String
+  cnic                                   String?  @unique
+  photo                                  String?
+  father_name                            String?
+  finger_print_photo                     String?
+  is_authorized                          Boolean? @default(false)
+  voted_for_presidential_candidates      String?
+  voted_for_vice_presidential_candidates String?
+  createdAt                              DateTime @default(now())
+  isRole                                 Role     @default(USER)
+}
 
 model Candidtes {
   id           String   @id @default(uuid())
@@ -37,7 +42,14 @@ model Candidtes {
   vote_counter Decimal
   position     String
   image        String?
-  createdAt    DateTime  @default(now())
+  createdAt    DateTime @default(now())
+}
+
+model Feedback {
+  id        String   @id @default(uuid())
+  feedback  String
+  userId    String?  @unique
+  createdAt DateTime @default(now())
 }
 
 // PresidentialCandidate model
