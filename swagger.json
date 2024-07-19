@@ -661,6 +661,59 @@
           }
         }
       }
+    },
+    "/feedback/add-feedback": {
+      "post": {
+        "summary": "Add feedback",
+        "tags": ["Feedback"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "feedback": {
+                    "type": "string"
+                  }
+                },
+                "required": ["feedback"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Feedback added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
     }
   },
   "components": {
