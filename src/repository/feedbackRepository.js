@@ -29,7 +29,6 @@ const feedbackRepository = {
     return feed;
   },
   meFeedback: async (userId) => {
-    console.log({ userId });
     const feed = await prisma.feedback.findUnique({
       where: {
         userId: userId,
