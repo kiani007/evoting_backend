@@ -212,5 +212,23 @@ const CandidateService = {
       };
     }
   },
+  deleteCandidate: async (id) => {
+    try {
+      const deleteCandidate = await candidateRepository.deleteCand(id);
+      if (deleteCandidate) {
+        return {
+          status: 200,
+          deleted: deleteCandidate,
+          message: "deleted successful",
+        };
+      }
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 400,
+        message: "An error occurred during deleting candidate",
+      };
+    }
+  },
 };
 export default CandidateService;

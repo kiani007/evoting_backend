@@ -16,7 +16,7 @@ candidateRouter.get('/vote-to-persident',authenticateJWT, CandidateController.ad
 candidateRouter.get('/vote-to-vice',authenticateJWT, CandidateController.addVoteToVicePresidentCandidte);
 candidateRouter.get('/get-matrix-result',authenticateJWT, CandidateController.matrixResult);
 candidateRouter.get('/get-winner-candidte',authenticateJWT, CandidateController.getWinnerCandidte);
-
+candidateRouter.delete('/delete-candidate-by-id', authenticateJWT, CandidateController.deleteCandidateByid);
 
 candidateRouter.all("*", (req, res) => {
   return res.status(404).json("Not Found");

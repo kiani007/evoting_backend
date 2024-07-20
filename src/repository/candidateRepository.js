@@ -180,7 +180,7 @@ const candidateRepository = {
 
   getTheWinnerCandidte: async (position) => {
     try {
-      console.log({position});
+      console.log({ position });
       const result = await prisma.$queryRaw`
       SELECT 
           c.name,
@@ -198,20 +198,47 @@ const candidateRepository = {
           AND c.position = ${position}::text
       LIMIT 1;
     `;
-       console.log({ result });
-    return {
-      status: 200,
-      candidate: result[0],
-      message: "Data retrieved successfully",
-    };
-
-   
+      console.log({ result });
+      return {
+        status: 200,
+        candidate: result[0],
+        message: "Data retrieved successfully",
+      };
     } catch (error) {
       console.error(error.message);
       return {
         status: 500,
         message: "Failed to get Result",
         error: error.message,
+      };
+    }
+  },
+  deleteCand: async (id) => {
+    try {
+      // Check if the candidate exists
+
+      const candidate = await prisma.candidtes.findUnique({
+        where: { id },
+      });
+
+      if (!candidate) {
+        return {
+          status: 404,
+          message: "Candidate not found",
+        };
+      }
+
+      // Delete the candidate
+      await prisma.candidtes.delete({
+        where: { id },
+      });
+
+      return true;
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 500,
+        message: "An error occurred during deleting candidate",
       };
     }
   },

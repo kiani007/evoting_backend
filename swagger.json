@@ -662,6 +662,54 @@
         }
       }
     },
+    "/candidate/delete-candidate-by-id": {
+      "delete": {
+        "summary": "Delete candidate by Id",
+        "tags": ["Candidate"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Delete candidate by Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Candidate Deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to get candidate"
+          }
+        }
+      }
+    },
     "/feedback/add-feedback": {
       "post": {
         "summary": "Add feedback",
