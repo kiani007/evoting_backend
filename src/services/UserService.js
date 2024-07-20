@@ -99,16 +99,31 @@ const UserService = {
       const isVicePresidentialVoteEmpty =
         !user.data.voted_for_vice_presidential_candidates;
 
-      if (isPresidentialVoteEmpty || isVicePresidentialVoteEmpty) {
+      if (isPresidentialVoteEmpty && isVicePresidentialVoteEmpty) {
         return {
           status: 200,
-          message: "User Eligibility",
+          message: "User is Eligibility to vote both",
+          eligibile: true,
+        };
+      } else if (isPresidentialVoteEmpty && !isVicePresidentialVoteEmpty) {
+        return {
+          status: 200,
+          message: "User is eligibility to vote President only",
+          eligibile: true,
+        };
+      } else if (!isPresidentialVoteEmpty && isVicePresidentialVoteEmpty) {
+        return {
+          status: 200,
+          message: "User is eligibility to vote Vive President only",
+          eligibile: true,
+        };
+      } else {
+        return {
+          status: 200,
+          message: "User already voted on both/Not Eligibile.",
+          eligibile: false,
         };
       }
-      return {
-        status: 200,
-        message: "User not Eligibility",
-      };
     } catch (error) {
       console.error(error.message);
       return {
