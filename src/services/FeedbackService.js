@@ -27,6 +27,38 @@ const FeedbackService = {
       };
     }
   },
+  allFeedback: async () => {
+    try {
+      const getFeed = await feedbackRepository.findAll();
+      return {
+        status: 200,
+        feedbacks: getFeed,
+        message: "fetch successful",
+      };
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 400,
+        message: "An error occurred during adding User",
+      };
+    }
+  },
+  getMeFeedback: async (userId) => {
+    try {
+      const getFeed = await feedbackRepository.meFeedback(userId);
+      return {
+        status: 200,
+        feedback: getFeed,
+        message: "fetch successful",
+      };
+    } catch (error) {
+      console.error(error.message);
+      return {
+        status: 400,
+        message: "An error occurred during adding User",
+      };
+    }
+  },
 };
 
 export default FeedbackService;

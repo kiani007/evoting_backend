@@ -762,6 +762,48 @@
           }
         }
       }
+    },
+    "/feedback/get-feedback": {
+      "get": {
+        "summary": "Get All Feedback ",
+        "tags": ["Feedback"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "Feedback fetch successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/feedback/get-me-feedback": {
+      "get": {
+        "summary": "Get Me Feedback ",
+        "tags": ["Feedback"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "Feedback fetch successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
     }
   },
   "components": {
