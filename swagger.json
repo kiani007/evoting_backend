@@ -350,8 +350,7 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "User fetch successfully"
@@ -404,10 +403,10 @@
                     "type": "string"
                   },
 
-                 "position": {
-                  "type": "string",
-                  "enum": ["president", "vice_president"]
-                }
+                  "position": {
+                    "type": "string",
+                    "enum": ["president", "vice_president"]
+                  }
                 },
                 "required": ["name", "party_name", "position"]
               }
@@ -563,7 +562,7 @@
         }
       }
     },
-   "/candidate/upload": {
+    "/candidate/upload": {
       "post": {
         "summary": "Upload a file",
         "tags": ["Candidate"],
@@ -620,8 +619,7 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Receved Matrix Data successfully"
@@ -772,8 +770,7 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Feedback fetch successfully"
@@ -793,14 +790,82 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Feedback fetch successfully"
           },
           "400": {
             "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/duration/add-duration": {
+      "post": {
+        "summary": "Set voting duration",
+        "tags": ["VotingDuration"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2024-07-29"
+                  },
+                  "startHour": {
+                    "type": "string",
+                    "example": "10AM"
+                  },
+                  "startMinute": {
+                    "type": "integer",
+                    "example": 0
+                  },
+                  "endHour": {
+                    "type": "string",
+                    "example": "2PM"
+                  },
+                  "endMinute": {
+                    "type": "integer",
+                    "example": 30
+                  }
+                },
+                "required": [
+                  "date",
+                  "startHour",
+                  "startMinute",
+                  "endHour",
+                  "endMinute"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Voting duration set successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Voting duration set from 2024-07-29T10:00:00.000Z to 2024-07-29T14:30:00.000Z."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

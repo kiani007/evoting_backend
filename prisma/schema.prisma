@@ -52,6 +52,13 @@ model Feedback {
   createdAt DateTime @default(now())
 }
 
+model VotingPeriod {
+  id       Int      @id @default(autoincrement())
+  startTime DateTime
+  endTime   DateTime
+}
+
+
 // PresidentialCandidate model
 // model PresidentialCandidate {
 //   id                 Int        @id @default(auto()) @map("_id") 
