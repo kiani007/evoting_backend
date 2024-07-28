@@ -51,7 +51,8 @@ const AuthService = {
                 number: body.number,
                 email: body.email,
                 cnic:body.cnic,
-                uid: body.uid
+                uid: body.uid,
+                is_authorized:true,
             };
 
             if (!user.first_name || !user.email || !user.last_name || !user.number || !user.cnic || !user.uid) {
