@@ -15,6 +15,19 @@ const VotingDurationController = {
     }
   },
 
+  getDuration:async(req,res)=>{
+    try {
+      const time = await VotingDurationService.getTme();
+      return res.status(time.status).json(time);
+    } catch (error) {
+      console.error(error.message);
+      return res.status(400).json({
+        status: 400,
+        message: "An error occurred during getting duration",
+      });
+    }
+  }
+
 };
 
 export default VotingDurationController;

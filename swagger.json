@@ -869,6 +869,26 @@
           }
         }
       }
+    },
+    "/duration/get-duration": {
+      "get": {
+        "summary": "Get Time Duration ",
+        "tags": ["VotingDuration"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Time fetch successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
     }
   },
   "components": {

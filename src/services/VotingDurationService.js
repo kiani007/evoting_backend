@@ -43,6 +43,23 @@ const VotingDurationService = {
       });
     }
   },
+  getTme: async () => {
+    try {
+      console.log("inxxxx");
+      const result = await votingPeriodRepository.getDurationTime();
+
+      return {
+        status: 200,
+        startTime: result.startTime.toISOString(),
+        endTime: result.endTime.toISOString(),
+      };
+    } catch (error) {
+      console.error(error.message);
+      res.status(400).send({
+        message: "An error occurred while getting the voting duration",
+      });
+    }
+  },
 };
 
 export default VotingDurationService;

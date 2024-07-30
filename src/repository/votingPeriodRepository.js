@@ -21,6 +21,10 @@ const votingPeriodRepository = {
       return newVotingPeriod;
     }
   },
+  getDurationTime: async () => {
+    const time = await prisma.votingPeriod.findFirst();
+    return time;
+  },
 };
 
 export default votingPeriodRepository;
